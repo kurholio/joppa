@@ -15,14 +15,14 @@ const PopupOverlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+
   z-index: 100;
 `;
 
 const PopupBox = styled.div`
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 30%;
+  left: 40%;
   transform: translate(-50%, -50%);
   background: white;
   color: black;
