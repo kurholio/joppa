@@ -1,8 +1,6 @@
 
-import React, {  useLayoutEffect, useState, useRef } from 'react';
+import React, { useState } from 'react';
 
-import gsap from 'gsap';
-import ScrollTrigger from 'gsap/ScrollTrigger';
 
 import styled from "styled-components";
 
