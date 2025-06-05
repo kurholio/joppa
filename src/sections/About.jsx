@@ -1,9 +1,87 @@
-import React from "react";
+
+import React, {  useLayoutEffect, useState, useRef } from 'react';
+
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+
 import styled from "styled-components";
 
 import img1 from "../assets/Images/1.webp";
 import img2 from "../assets/Images/2.webp";
 import img3 from "../assets/Images/3.webp";
+
+
+const PopupOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+`;
+
+const PopupBox = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  color: black;
+  padding: 2rem;
+  border-radius: 20px;
+  z-index: 101;
+  text-align: center;
+  max-width: 90vw;
+  width: 400px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+`;
+
+const PopupButton = styled.button`
+  margin-top: 1.5rem;
+  padding: 0.6rem 1.5rem;
+  background-color: black;
+  color: white;
+  font-size: ${(props) => props.theme.fontsm};
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #333;
+    transform: scale(1.05);
+  }
+`;
+
+
+const ButtonWrapper = styled.div`
+
+
+  text-align:center;
+  z-index: 12;
+  margin-bottom: 8rem;
+  margin-right: 120px;
+  padding-top: 5rem; /* <-- Add this line */
+`;
+
+const CTAButton = styled.button`
+  padding: 1.1rem 2rem;
+  background-color: black;
+  color: white;
+  font-size: ${(props) => props.theme.fontlg}; /* Increased from fontmd */
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+
+  &:hover {
+    background-color: #333;
+    transform: scale(1.08);
+  }
+`;
 
 const Section = styled.section`
   min-height: 100vh;
@@ -31,6 +109,7 @@ const Left = styled.div`
   position: relative;
   z-index: 5;
   margin-top: 20%;
+  padding-right:4%;
 
   @media (max-width: 64em) {
     width: 80%;
@@ -134,6 +213,13 @@ const Title = styled.h1`
 `;
 
 const About = () => {
+	
+	const [showPopup, setShowPopup] = useState(false);
+	const handleRedirect = () => {
+	    window.open("https://www.etsy.com/shop/tiferet", "_blank");
+	    setShowPopup(false);
+	  };
+
   return (
     <Section id="fixed-target" className="about">
       <Title
@@ -141,7 +227,7 @@ const About = () => {
         data-scroll-speed="-2"
         data-scroll-direction="horizontal"
       >
-        About
+        Essence
       </Title>
       <Left data-scroll data-scroll-sticky data-scroll-target="#fixed-target">
 	  Rooted in the mystical Hebrew concept of TIFERET, meaning "beauty," it stands at the
@@ -152,18 +238,39 @@ const About = () => {
 		It's the spiritual pulse where soul meets style.
         
 		<br />
-		<br />
-
+		<ButtonWrapper>
+		    <CTAButton onClick={() => setShowPopup(true)}>
+		      Style Your Soul
+		    </CTAButton>
+		  </ButtonWrapper>
+		  
+		  {showPopup && (
+		  	    <>
+		  	      <PopupOverlay onClick={() => setShowPopup(false)} />
+		  	      <PopupBox>
+		  	        <p>
+		  	          You’re about to leave this site and visit our Etsy marketplace 
+		  			  to explore Soulwear and to find your element.
+		  	        </p>
+		  	        <PopupButton onClick={handleRedirect}>
+		  	          Continue to Etsy
+		  	        </PopupButton>
+		  	        <div style={{ marginTop: "1rem", fontSize: "0.8rem", cursor: "pointer" }} onClick={() => setShowPopup(false)}>
+		  	          Cancel
+		  	        </div>
+		  	      </PopupBox>
+		  	    </>
+		  	  )}
       </Left>
 
       <Right>
-        <img width="400" height="600" src={img1} alt="About Us" />
+        <img width="400" height="600" src={img1} alt="Essence" />
         <img
           width="400"
           height="600"
           className="small-img-1"
           src={img2}
-          alt="About Us"
+          alt="Essences"
           data-scroll
           data-scroll-speed="5"
         />
@@ -172,7 +279,7 @@ const About = () => {
           height="600"
           className="small-img-2"
           src={img3}
-          alt="About Us"
+          alt="Essence"
           data-scroll
           data-scroll-speed="-2"
         />
